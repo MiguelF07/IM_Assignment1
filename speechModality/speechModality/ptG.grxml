@@ -1,0 +1,105 @@
+﻿<?xml version="1.0"?>
+<grammar xml:lang="pt-PT" version="1.0" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+	<rule id="rootRule" scope="public">
+	  <item>
+		  <one-of>
+			  <item>
+				  <ruleref uri="#Start"/>
+				  <tag>out.start="START";</tag>
+			  </item>
+			  <item>
+				  <ruleref uri="#End"/>
+				  <tag>out.end="END";</tag>
+			  </item>
+			  <item>
+				  <ruleref uri="#Restart"/>
+				  <tag>out.restart="RESTART";</tag>
+			  </item>
+			  <item>
+				  <ruleref uri="#Continue"/>
+				  <tag>out.continue="CONTINUE";</tag>
+			  </item>
+		  </one-of>
+	  </item>
+	</rule>
+	<rule id="Start">
+		<example> Quero começar o jogo! </example>
+		<example> Pretendo iniciar o jogo! </example>
+		<example> Inicia um novo jogo! </example>
+		<example> Começa a jogar. </example>
+		<example> Gostava de começar a jogar. </example>
+
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> começar</item>
+			<item> iniciar</item>
+			<item> começa</item>
+			<item> inicia</item>
+		</one-of>
+		<item repeat="0-1"> jogo </item>
+		<item repeat="0-1"> novo jogo </item>
+		<item repeat="0-1"> jogar</item>
+	</rule>
+
+	<rule id="End">
+		<example> Quero acabar o jogo! </example>
+		<example> Pretendo terminar o jogo! </example>
+		<example> Termina este jogo! </example>
+		<example> Acaba com este jogo. </example>
+		<example> Gostava de fechar o jogo. </example>
+
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> terminar</item>
+			<item> acabar</item>
+			<item> termina</item>
+			<item> acaba</item>
+			<item> fechar</item>
+		</one-of>
+
+		<item repeat="0-1"> jogo </item>
+	</rule>
+
+	<rule id="Restart">
+		<example> Quero reiniciar o jogo! </example>
+		<example> Pretendo reiniciar o jogo! </example>
+		<example> Gostava de recomeçar o jogar. </example>
+
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> reiniciar</item>
+			<item> recomeçar</item>
+			<item> novo</item>
+
+		</one-of>
+		<item repeat="0-1"> jogo </item>
+		<item repeat="0-1"> novo jogo </item>
+		<item repeat="0-1"> jogar</item>
+	</rule>
+
+	<rule id="Continue">
+		<example> Quero continuar o jogo! </example>
+		<example> Pretendo prosseguir com o jogo! </example>
+		<example> Gostava de ficar o jogar. </example>
+		<example> Continua o jogo. </example>
+
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> continuar</item>
+			<item> prosseguir</item>
+			<item> continua</item>
+			<item> ficar</item>
+
+		</one-of>
+		<item repeat="0-1"> jogo </item>
+		<item repeat="0-1"> jogar</item>
+	</rule>
+</grammar>
