@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using System.Windows.Controls;
+using OpenQA.Selenium.Interactions;
 
 namespace AppGui
 {
@@ -29,7 +30,7 @@ namespace AppGui
         public MainWindow()
         {
             InitializeComponent();
-            driver = new ChromeDriver();
+            IWebDriver driver = new ChromeDriver("C:\\Users\\MiguelFerreira\\Desktop\\IM_Assignment1\\AppGui\\AppGui\\");
             driver.Navigate().GoToUrl("https://www.playgreatpoker.com/FreePokerGameStart.html");
 
 
