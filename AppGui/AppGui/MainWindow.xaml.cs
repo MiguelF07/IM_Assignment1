@@ -25,12 +25,12 @@ namespace AppGui
         private MmiCommunication mmiSender;
         private LifeCycleEvents lce;
         private MmiCommunication mmic;
-        private ChromeDriver driver;
+        private IWebDriver driver;
 
         public MainWindow()
         {
             InitializeComponent();
-            IWebDriver driver = new ChromeDriver("C:\\Users\\MiguelFerreira\\Desktop\\IM_Assignment1\\AppGui\\AppGui\\");
+            driver = new ChromeDriver("../."); //Uses a specific driver for chrome version 107
             driver.Navigate().GoToUrl("https://www.playgreatpoker.com/FreePokerGameStart.html");
 
 
@@ -53,38 +53,80 @@ namespace AppGui
             var doc = XDocument.Parse(e.Message);
             var com = doc.Descendants("command").FirstOrDefault().Value;
             dynamic json = JsonConvert.DeserializeObject(com);
+            Console.WriteLine(((string)json.recognized[0].ToString()));
 
             switch ((string)json.recognized[0].ToString())
             {
+                
              //Opções de Jogo
                 case "START":
-                    driver.FindElement(By.Id("btnNewGame")).Click();
+                    if(driver.FindElements(By.Id("btnNewGame")).Count() > 0)
+                    {
+                        driver.FindElement(By.Id("btnNewGame")).Click();
+                        call_tts("O jogo está a ser iniciado.");
+                    }
                     break;
                 case "END":
-                    driver.FindElement(By.Id("help-button")).Click();
+                    if(driver.FindElements(By.Id("help-button")).Count()>0)
+                    {
+                        driver.FindElement(By.Id("help-button")).Click();
+                        call_tts("O jogo foi terminado.");
+                    }
                     break;
                 case "RESTART":
-                    driver.FindElement(By.Id("fold-button")).Click();
+                    if (driver.FindElements(By.Id("fold-button")).Count()>0) 
+                    {
+                        driver.FindElement(By.Id("fold-button")).Click();
+                        call_tts("A reiniciar o jogo.");
+                    }
                     break;
                 case "CONTINUE":
-                    driver.FindElement(By.Id("call-button")).Click();
+                    if (driver.FindElements(By.Id("call-button")).Count()>0)
+                    {
+                        driver.FindElement(By.Id("call-button")).Click();
+                        call_tts("Continuar Jogo");
+                    } 
                     break;
                 case "PLAYERNAME":
                     //escrever no botão id="name-button"
+                    if(driver.FindElements(By.Id("PlayerName")).Count()>0)
+                    {
+                        call_tts("Que nome de utilizador gostaria de usar?");
+                        driver.FindElement(By.Id("PlayerName")).Click();
+                        driver.FindElement(By.Id("PlayerName")).SendKeys("Player1");
+                        call_tts("O nome de utilizador é Player1"); //Change it to variable later
+                        //Figure out how to get input of user
+                    }
                     break;
 
              //Ações do Jogo in Game
                 case "CHECK":
-                    driver.FindElement(By.Id("call-button")).Click();
+                    if(driver.FindElements(By.Id("call-button")).Count()>0)
+                    {
+                        driver.FindElement(By.Id("call-button")).Click();
+
+                    }
                     break;
+
                 case "CALL":
-                    driver.FindElement(By.Id("call-button")).Click();
+                    if(driver.FindElements(By.Id("call-button")).Count()>0) 
+                    {
+                        driver.FindElement(By.Id("call-button")).Click();
+                    }
+                    
                     break;
                 case "RAISE":
-                    driver.FindElement(By.Id("raise-button")).Click();//confirmar se funciona e adicionar valor
+                    if(driver.FindElements(By.Id("raise-button")).Count() > 0)
+                    {
+                        driver.FindElement(By.Id("raise-button")).Click();//confirmar se funciona e adicionar valor
+                    }
                     break;
+
                 case "FOLD":
-                    driver.FindElement(By.Id("fold-button")).Click();
+                    if(driver.FindElements(By.Id("fold-button")).Count()>0)
+                    {
+                        driver.FindElement(By.Id("fold-button")).Click();
+                    }
                     break;
                 case "ALLIN":
                     
@@ -107,14 +149,15 @@ namespace AppGui
                     break;
             }
 
+        }
 
-
+        private void call_tts(String speech)
+        {
             //  new 16 april 2020
             mmic.Send(lce.NewContextRequest());
 
             string json2 = ""; // "{ \"synthesize\": [";
-            json2 += (string)json.recognized[0].ToString()+ " ";
-            json2 += (string)json.recognized[1].ToString() + " DONE." ;
+            json2 += speech;
             //json2 += "] }";
             /*
              foreach (var resultSemantic in e.Result.Semantics)
@@ -126,8 +169,6 @@ namespace AppGui
             */
             var exNot = lce.ExtensionNotification(0 + "", 0 + "", 1, json2);
             mmic.Send(exNot);
-
-
         }
     }
 }
