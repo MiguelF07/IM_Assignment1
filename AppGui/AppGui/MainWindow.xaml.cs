@@ -9,6 +9,7 @@ using mmisharp;
 using Newtonsoft.Json;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using System.Windows.Controls;
 
 namespace AppGui
 {
@@ -54,14 +55,54 @@ namespace AppGui
 
             switch ((string)json.recognized[0].ToString())
             {
+             //Opções de Jogo
                 case "START":
                     driver.FindElement(By.Id("btnNewGame")).Click();
                     break;
-                case "END": 
+                case "END":
+                    driver.FindElement(By.Id("help-button")).Click();
                     break;
                 case "RESTART":
+                    driver.FindElement(By.Id("fold-button")).Click();
                     break;
                 case "CONTINUE":
+                    driver.FindElement(By.Id("call-button")).Click();
+                    break;
+                case "PLAYERNAME":
+                    //escrever no botão id="name-button"
+                    break;
+
+             //Ações do Jogo in Game
+                case "CHECK":
+                    driver.FindElement(By.Id("call-button")).Click();
+                    break;
+                case "CALL":
+                    driver.FindElement(By.Id("call-button")).Click();
+                    break;
+                case "RAISE":
+                    driver.FindElement(By.Id("raise-button")).Click();//confirmar se funciona e adicionar valor
+                    break;
+                case "FOLD":
+                    driver.FindElement(By.Id("fold-button")).Click();
+                    break;
+                case "ALLIN":
+                    
+                    break;
+
+             //Informação sobre o estado de jogo
+                case "TABLE":
+                    //informação das cartas na mesa
+                    break;
+                case "HAND":
+                    //informação das cartas na mão
+                    break;
+                case "POT":
+                    //procurar valor no id="total-pot"
+                    break;
+
+             //Definições acrescentadas
+                case "LIMIT":
+
                     break;
             }
 
