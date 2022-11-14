@@ -30,6 +30,7 @@ namespace AppGui
         private MmiCommunication mmic;
         private IWebDriver driver;
         private Dictionary<String, String> cards;
+        private Boolean raise_flag;
 
         public MainWindow()
         {
@@ -37,6 +38,7 @@ namespace AppGui
             driver = new ChromeDriver("../."); //Uses a specific driver for chrome version 107
             driver.Navigate().GoToUrl("https://www.playgreatpoker.com/FreePokerGameStart.html");
             cards = addCards();
+            raise_flag = false;
 
 
             mmiC = new MmiCommunication("localhost",8000, "User1", "GUI");
@@ -70,9 +72,15 @@ namespace AppGui
             //    call_tts("Desculpe pode repetir?");
             //}
 
+            var text_of_switch = (string)json.recognized[0].ToString();
+
+            if(raise_flag==true)
+            {
+                text_of_switch = "RAISE";
+            }
 
 
-            switch ((string)json.recognized[0].ToString())
+            switch (text_of_switch)
             {
                 
              //Opções de Jogo
@@ -135,7 +143,48 @@ namespace AppGui
                 case "RAISE":
                     if(driver.FindElements(By.Id("raise-button")).Count() > 0)
                     {
-                        driver.FindElement(By.Id("raise-button")).Click();//confirmar se funciona e adicionar valor
+                        var v_min = driver.FindElement(By.Id("raise-button")).Text.Split('$')[1];
+                        var v_max = driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text.Split('$')[1];
+                        if(raise_flag==false)
+                        {
+                            call_tts("O valor minimo de aumento é " + v_min + " e o valor máximo é " + v_max + " quanto pretende aumentar ?");
+                        }
+                        raise_flag = true;
+                        if(raise_flag==true)
+                        {
+                            Console.WriteLine("Esta no raise flag");
+
+                            if(json.recognized[0].ToString().Contains("NUMBERS"))
+                            {
+                                var numero = int.Parse(json.recognized[0].ToString().Split('S')[1]);
+                                Console.WriteLine(numero);
+                                Console.WriteLine("--------------------------");
+
+                                if (numero % 10 != 0 || numero < int.Parse(v_min) || numero > int.Parse(v_max))
+                                {
+                                    Console.WriteLine("No If");
+                                    call_tts("O número da aposta tem de ser múltiplo de 10 e estar entre os valores referidos.");
+                                }
+
+                                else
+                                {
+                                    Console.WriteLine("No else");
+                                    var n_of_clicks = (numero - int.Parse(v_min)) / 10;
+                                    for(var i = 0; i < n_of_clicks; i++)
+                                    {
+                                        if(driver.FindElements(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[7]")).Count() > 0)
+                                        {
+                                            Console.WriteLine("Yeyy");
+                                            driver.FindElement(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[7]")).Click();
+                                        }
+                                        
+                                    }
+                                    raise_flag = false;
+                                    driver.FindElement(By.XPath("//*[@id=\"raise-button\"]")).Click();
+                                    call_tts("Foram apostados " + numero + " dólares.");
+                                }
+                            }
+                        }
                     }
                     break;
 
@@ -168,6 +217,10 @@ namespace AppGui
              //Definições acrescentadas
                 case "LIMIT":
 
+                    break;
+
+                default:
+                    Console.WriteLine("No option selected.");
                     break;
             }
 
