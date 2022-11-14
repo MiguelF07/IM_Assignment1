@@ -21,10 +21,10 @@
 					<ruleref uri="#Continue"/>
 					<tag>out.continue="CONTINUE";</tag>
 				</item>
-				<item>
+				<!--<item>
 					<ruleref uri="#PlayerName"/>
 					<tag>out.playername="PLAYERNAME";</tag>
-				</item>
+				</item>-->
 				
 				<!-- Ações do Jogo in Game-->
 				<item>
@@ -239,9 +239,75 @@
 	</rule>
 	
 	<!-- Informação sobre o estado de jogo-->
+	<rule id="Table">
+		<example>Mostra-me as cartas na mesa</example>
+		<example>Quero ver as cartas da mesa</example>
+		<example>Diz-me as cartas da mesa</example>
+
+		<item repeat="0-1">Mostra</item>
+		<item repeat="0-1">Diz</item>
+		<item repeat="0-1">Quero ver</item>
+		<item repeat="0-1">Pretendo ver</item>
+		<item repeat="0-1">Gostava de ver</item>
+		<one-of>
+			<item> cartas na mesa</item>
+			<item> mesa</item>
+		</one-of>
+	</rule>
+
+	<rule id="Hand">
+		<example>Mostra-me a minha mão</example>
+		<example>Quero ver as cartas da minha mão</example>
+		<example>Diz-me as cartas da minha mão</example>
+
+		<item repeat="0-1">Mostra</item>
+		<item repeat="0-1">Diz</item>
+		<item repeat="0-1">Quero ver</item>
+		<item repeat="0-1">Pretendo ver</item>
+		<item repeat="0-1">Gostava de ver</item>
+		<one-of>
+			<item> cartas da minha mão</item>
+			<item> minha mão</item>
+		</one-of>
+	</rule>
+
+	<rule id="Pot">
+		<example>Qual o valor total apostado?</example>
+		<example>Quero saber o valor total</example>
+		<example>Quanto apostaram até agora?</example>
+
+		<item repeat="0-1">Mostra</item>
+		<item repeat="0-1">Diz</item>
+		<item repeat="0-1">Quero ver</item>
+		<item repeat="0-1">Pretendo ver</item>
+		<item repeat="0-1">Gostava de ver</item>
+		<one-of>
+			<item> valor total</item>
+			<item> total da aposta</item>
+			<item> total apostado</item>
+		</one-of>
+	</rule>
 
 	<!-- Definições acrescentadas-->
 
+	<rule id="Limit">
+		<example>Pretendo definir um limite para o próximo jogo</example>
+		<example>Quero definir um limite diário</example>
+		<example>Quanto limitar as minhas apostas</example>
+
+		<item repeat="0-1">Quero</item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava</item>
+		<one-of>
+			<item> definir limite</item>
+			<item> limitar</item>
+		</one-of>
+		<one-of>
+			<item> diário</item>
+			<item> próximo jogo</item>
+		</one-of>
+	</rule>
+	
 	<!-- Extras-->
 	<rule id="Numbers">
 		<one-of>
