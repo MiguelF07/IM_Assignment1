@@ -85,7 +85,7 @@ namespace speechModality
                 json += "\"" + resultSemantic.Value.Value + "\", ";
             }
             json = json.Substring(0, json.Length - 2);
-            json += "] }";
+            json += "], \"confidence\": [ \"" + e.Result.Confidence + "\" ]}";
 
             var exNot = lce.ExtensionNotification(e.Result.Audio.StartTime + "", e.Result.Audio.StartTime.Add(e.Result.Audio.Duration) + "", e.Result.Confidence, json);
             mmic.Send(exNot);

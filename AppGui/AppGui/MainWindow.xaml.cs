@@ -41,7 +41,7 @@ namespace AppGui
             raise_flag = false;
 
 
-            mmiC = new MmiCommunication("localhost",8000, "User1", "GUI");
+            mmiC = new MmiCommunication("localhost", 8000, "User1", "GUI");
             mmiC.Message += MmiC_Message;
             mmiC.Start();
 
@@ -50,17 +50,20 @@ namespace AppGui
             lce = new LifeCycleEvents("APP", "TTS", "User1", "na", "command"); // LifeCycleEvents(string source, string target, string id, string medium, string mode
             // MmiCommunication(string IMhost, int portIM, string UserOD, string thisModalityName)
             mmic = new MmiCommunication("localhost", 8000, "User1", "GUI");
-            
+
 
         }
 
         private void MmiC_Message(object sender, MmiEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine(e.Message);
             Console.WriteLine(e.Message);
             var doc = XDocument.Parse(e.Message);
             var com = doc.Descendants("command").FirstOrDefault().Value;
             dynamic json = JsonConvert.DeserializeObject(com);
-            Console.WriteLine(((string)json.recognized[0].ToString()));
+            System.Diagnostics.Debug.WriteLine(((string)json.recognized[0].ToString()));
+            System.Diagnostics.Debug.WriteLine("CONFIANCA");
+            System.Diagnostics.Debug.WriteLine(((string)json.confidence[0].ToString()));
 
 
             //Console.WriteLine("jjjjjjjjj");
@@ -74,155 +77,165 @@ namespace AppGui
 
             var text_of_switch = (string)json.recognized[0].ToString();
 
-            if(raise_flag==true)
+            if(float.Parse(((string)json.confidence[0].ToString()))<0.45 || float.Parse(((string)json.confidence[0].ToString())) > 0.95)
             {
-                text_of_switch = "RAISE";
+                call_tts("Não percebi, pode repetir?");
             }
-
-
-            switch (text_of_switch)
+            else
             {
-                
-             //Opções de Jogo
-                case "START":
-                    if(driver.FindElements(By.Id("btnNewGame")).Count() > 0)
-                    {
-                        driver.FindElement(By.Id("btnNewGame")).Click();
-                        call_tts("O jogo está a ser iniciado.");
-                    }
-                    break;
-                case "END":
-                    if(driver.FindElements(By.Id("help-button")).Count()>0)
-                    {
-                        driver.FindElement(By.Id("help-button")).Click();
-                        call_tts("O jogo foi terminado.");
-                    }
-                    break;
-                case "RESTART":
-                    if (driver.FindElements(By.Id("fold-button")).Count()>0) 
-                    {
-                        driver.FindElement(By.Id("fold-button")).Click();
-                        call_tts("A reiniciar o jogo.");
-                    }
-                    break;
-                case "CONTINUE":
-                    if (driver.FindElements(By.Id("call-button")).Count()>0)
-                    {
-                        driver.FindElement(By.Id("call-button")).Click();
-                        call_tts("Continuar Jogo");
-                    } 
-                    break;
-                case "PLAYERNAME":
-                    //escrever no botão id="name-button"
-                    if(driver.FindElements(By.Id("PlayerName")).Count()>0)
-                    {
-                        call_tts("Que nome de utilizador gostaria de usar?");
-                        driver.FindElement(By.Id("PlayerName")).Click();
-                        driver.FindElement(By.Id("PlayerName")).SendKeys("Player1");
-                        call_tts("O nome de utilizador é Player1"); //Change it to variable later
-                        //Figure out how to get input of user
-                    }
-                    break;
+                if (raise_flag == true)
+                {
+                    text_of_switch = "RAISE";
+                }
 
-             //Ações do Jogo in Game
-                case "CHECK":
-                    if(driver.FindElements(By.Id("call-button")).Count()>0)
-                    {
-                        driver.FindElement(By.Id("call-button")).Click();
 
-                    }
-                    break;
+                switch (text_of_switch)
+                {
 
-                case "CALL":
-                    if(driver.FindElements(By.Id("call-button")).Count()>0) 
-                    {
-                        driver.FindElement(By.Id("call-button")).Click();
-                    }
-                    
-                    break;
-                case "RAISE":
-                    if(driver.FindElements(By.Id("raise-button")).Count() > 0)
-                    {
-                        var v_min = driver.FindElement(By.Id("raise-button")).Text.Split('$')[1];
-                        var v_max = driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text.Split('$')[1];
-                        if(raise_flag==false)
+                    //Opções de Jogo
+                    case "START":
+                        if (driver.FindElements(By.Id("btnNewGame")).Count() > 0)
                         {
-                            call_tts("O valor minimo de aumento é " + v_min + " e o valor máximo é " + v_max + " quanto pretende aumentar ?");
+                            driver.FindElement(By.Id("btnNewGame")).Click();
+                            call_tts("O jogo está a ser iniciado.");
                         }
-                        raise_flag = true;
-                        if(raise_flag==true)
+                        break;
+                    case "END":
+                        if (driver.FindElements(By.Id("help-button")).Count() > 0)
                         {
-                            Console.WriteLine("Esta no raise flag");
+                            driver.FindElement(By.Id("help-button")).Click();
+                            call_tts("O jogo foi terminado.");
+                        }
+                        break;
+                    case "RESTART":
+                        if (driver.FindElements(By.Id("fold-button")).Count() > 0)
+                        {
+                            driver.FindElement(By.Id("fold-button")).Click();
+                            call_tts("A reiniciar o jogo.");
+                        }
+                        break;
+                    case "CONTINUE":
+                        if (driver.FindElements(By.Id("call-button")).Count() > 0)
+                        {
+                            driver.FindElement(By.Id("call-button")).Click();
+                            call_tts("Continuar Jogo");
+                        }
+                        break;
+                    case "PLAYERNAME":
+                        //escrever no botão id="name-button"
+                        if (driver.FindElements(By.Id("PlayerName")).Count() > 0)
+                        {
+                            call_tts("Que nome de utilizador gostaria de usar?");
+                            driver.FindElement(By.Id("PlayerName")).Click();
+                            driver.FindElement(By.Id("PlayerName")).SendKeys("Player1");
+                            call_tts("O nome de utilizador é Player1"); //Change it to variable later
+                                                                        //Figure out how to get input of user
+                        }
+                        break;
 
-                            if(json.recognized[0].ToString().Contains("NUMBERS"))
+                    //Ações do Jogo in Game
+                    case "CHECK":
+                        if (driver.FindElements(By.Id("call-button")).Count() > 0)
+                        {
+                            driver.FindElement(By.Id("call-button")).Click();
+
+                        }
+                        break;
+
+                    case "CALL":
+                        if (driver.FindElements(By.Id("call-button")).Count() > 0)
+                        {
+                            driver.FindElement(By.Id("call-button")).Click();
+                        }
+
+                        break;
+                    case "RAISE":
+                        if (driver.FindElements(By.Id("raise-button")).Count() > 0)
+                        {
+                            var v_min = driver.FindElement(By.Id("raise-button")).Text.Split('$')[1];
+                            var v_max = driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text.Split('$')[1];
+                            if (raise_flag == false)
                             {
-                                var numero = int.Parse(json.recognized[0].ToString().Split('S')[1]);
-                                Console.WriteLine(numero);
-                                Console.WriteLine("--------------------------");
+                                call_tts("O valor minimo de aumento é " + v_min + " e o valor máximo é " + v_max + " quanto pretende aumentar ?");
+                            }
+                            raise_flag = true;
+                            if (raise_flag == true)
+                            {
+                                Console.WriteLine("Esta no raise flag");
 
-                                if (numero % 10 != 0 || numero < int.Parse(v_min) || numero > int.Parse(v_max))
+                                if (json.recognized[0].ToString().Contains("NUMBERS"))
                                 {
-                                    Console.WriteLine("No If");
-                                    call_tts("O número da aposta tem de ser múltiplo de 10 e estar entre os valores referidos.");
-                                }
+                                    var numero = int.Parse(json.recognized[0].ToString().Split('S')[1]);
+                                    Console.WriteLine(numero);
+                                    Console.WriteLine("--------------------------");
 
-                                else
-                                {
-                                    Console.WriteLine("No else");
-                                    var n_of_clicks = (numero - int.Parse(v_min)) / 10;
-                                    for(var i = 0; i < n_of_clicks; i++)
+                                    if (numero % 10 != 0 || numero < int.Parse(v_min) || numero > int.Parse(v_max))
                                     {
-                                        if(driver.FindElements(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[7]")).Count() > 0)
-                                        {
-                                            Console.WriteLine("Yeyy");
-                                            driver.FindElement(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[7]")).Click();
-                                        }
-                                        
+                                        Console.WriteLine("No If");
+                                        call_tts("O número da aposta tem de ser múltiplo de 10 e estar entre os valores referidos.");
                                     }
-                                    raise_flag = false;
-                                    driver.FindElement(By.XPath("//*[@id=\"raise-button\"]")).Click();
-                                    call_tts("Foram apostados " + numero + " dólares.");
+
+                                    else
+                                    {
+                                        Console.WriteLine("No else");
+                                        var n_of_clicks = (numero - int.Parse(v_min)) / 10;
+                                        for (var i = 0; i < n_of_clicks; i++)
+                                        {
+                                            if (driver.FindElements(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[7]")).Count() > 0)
+                                            {
+                                                Console.WriteLine("Yeyy");
+                                                driver.FindElement(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[7]")).Click();
+                                            }
+
+                                        }
+                                        raise_flag = false;
+                                        driver.FindElement(By.XPath("//*[@id=\"raise-button\"]")).Click();
+                                        call_tts("Foram apostados " + numero + " dólares.");
+                                    }
                                 }
                             }
                         }
-                    }
-                    break;
+                        break;
 
-                case "FOLD":
-                    if(driver.FindElements(By.Id("fold-button")).Count()>0)
-                    {
-                        driver.FindElement(By.Id("fold-button")).Click();
-                    }
-                    break;
-                case "ALLIN":
-                    
-                    break;
+                    case "FOLD":
+                        if (driver.FindElements(By.Id("fold-button")).Count() > 0)
+                        {
+                            driver.FindElement(By.Id("fold-button")).Click();
+                        }
+                        break;
+                    case "ALLIN":
 
-             //Informação sobre o estado de jogo
-                case "TABLE":
-                    //informação das cartas na mesa
-                    break;
-                case "HAND":
-                    cardsInTable();
-                    break;
-                case "POT":
-                    if (driver.FindElements(By.Id("total-pot")).Count() > 0)
-                    {
-                        String pot_total = driver.FindElement(By.Id("total-pot")).Text;
-                        call_tts("O valor total apostado atualmente é " + pot_total.Split('$')[1]+"dólares");
-                    }
-                    //procurar valor no id="total-pot"
-                    break;
+                        break;
 
-             //Definições acrescentadas
-                case "LIMIT":
+                    //Informação sobre o estado de jogo
+                    case "TABLE":
+                        //informação das cartas na mesa
+                        cardsInTable();
+                        break;
+                    case "HAND":
+                        cardsInHand();
+                        break;
+                    case "POT":
+                        if (driver.FindElements(By.Id("total-pot")).Count() > 0)
+                        {
+                            String pot_total = driver.FindElement(By.Id("total-pot")).Text;
+                            call_tts("O valor total apostado atualmente é " + pot_total.Split('$')[1] + "dólares");
+                        }
+                        //procurar valor no id="total-pot"
+                        break;
 
-                    break;
+                    //Definições acrescentadas
+                    case "LIMIT":
 
-                default:
-                    Console.WriteLine("No option selected.");
-                    break;
+                        break;
+
+                    default:
+                        Console.WriteLine("No option selected.");
+                        break;
+                }
             }
+
+            
 
         }
 
@@ -246,7 +259,7 @@ namespace AppGui
             mmic.Send(exNot);
         }
 
-        private void cardsInTable()
+        private void cardsInHand()
         {
             var textC1 = driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[1]/div[1]")).GetAttribute("style");
             var card1 = textC1.Split('/')[2].Split('.')[0].ToString();
@@ -258,8 +271,11 @@ namespace AppGui
             var textCardC2 = cards[card2];
 
             call_tts("A sua mão contem " + textCardC1 + " e " + textCardC2);
+        }
 
-            
+        private void cardsInTable()
+        {
+
         }
 
         private Dictionary<String,String> addCards()
