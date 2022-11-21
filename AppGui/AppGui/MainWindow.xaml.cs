@@ -104,6 +104,11 @@ namespace AppGui
                     text_of_switch = "ALLIN";
                 }
 
+                if (limit_flag == true)
+                {
+                    text_of_switch = "LIMIT";
+                }
+
 
                 switch (text_of_switch)
                 {
