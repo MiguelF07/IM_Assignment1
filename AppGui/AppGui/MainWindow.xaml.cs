@@ -31,6 +31,10 @@ namespace AppGui
         private IWebDriver driver;
         private Dictionary<String, String> cards;
         private Boolean raise_flag;
+        private Boolean all_in_flag;
+        private Boolean limit_flag;
+        private int bet_limit;
+        private int currentCash;
 
         public MainWindow()
         {
@@ -39,6 +43,10 @@ namespace AppGui
             driver.Navigate().GoToUrl("https://www.playgreatpoker.com/FreePokerGameStart.html");
             cards = addCards();
             raise_flag = false;
+            all_in_flag = false;
+            limit_flag = false;
+            bet_limit = -1;
+            currentCash = -1;
 
 
             mmiC = new MmiCommunication("localhost", 8000, "User1", "GUI");
@@ -77,6 +85,9 @@ namespace AppGui
 
             var text_of_switch = (string)json.recognized[0].ToString();
 
+            var saldo_atual = get_Current_Cash();
+            verify_Limit(saldo_atual);
+
             if(float.Parse(((string)json.confidence[0].ToString()))<0.45 || float.Parse(((string)json.confidence[0].ToString())) > 0.95)
             {
                 call_tts("Não percebi, pode repetir?");
@@ -86,6 +97,11 @@ namespace AppGui
                 if (raise_flag == true)
                 {
                     text_of_switch = "RAISE";
+                }
+
+                if (all_in_flag == true)
+                {
+                    text_of_switch = "ALLIN";
                 }
 
 
@@ -204,8 +220,34 @@ namespace AppGui
                         }
                         break;
                     case "ALLIN":
+                        if(all_in_flag == true)
+                        {
+                            String command_all_in = (string)json.recognized[0].ToString();
+                            //Adicionar à gramatica um YES e um NO
+                            if(command_all_in == "YES")
+                            {
+                                if (driver.FindElements(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[6]")).Count() > 0)
+                                {
+                                    driver.FindElement(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[6]")).Click(); //Clica no MAX
+                                    driver.FindElement(By.Id("raise-button")).Click();
+                                    call_tts("Foi apostada a totalidade do seu saldo.");
+                                }
+                            }
+                            else
+                            {
+                                call_tts("Aposta cancelada.");
+                            }
+                            all_in_flag = false;
+                            
+                        }
+                        else
+                        {
+                            call_tts("Tem a certeza que quer apostar tudo?");
+                            all_in_flag = true;
+                        }
 
                         break;
+
 
                     //Informação sobre o estado de jogo
                     case "TABLE":
@@ -226,8 +268,30 @@ namespace AppGui
 
                     //Definições acrescentadas
                     case "LIMIT":
+                        if (limit_flag == true)
+                        {
+                            if (json.recognized[0].ToString().Contains("NUMBERS"))
+                            {
+                                var numero = (json.recognized[0].ToString().Split('S')[1]);
+                                call_tts("Limite de " + numero + " dólares definido.");
+                                limit_flag = false;
+
+                            }
+                        }
+                        else
+                        {
+                            call_tts("Qual é o valor que pretende definir como limite?");
+                            limit_flag = true;
+                        }
+                        
 
                         break;
+
+                    case "CASH":
+                        String saldo = get_Current_Cash().ToString();
+                        call_tts("O seu saldo atual é de " + saldo + " dólares.");
+                        break;
+                        
 
                     default:
                         Console.WriteLine("No option selected.");
@@ -237,6 +301,26 @@ namespace AppGui
 
             
 
+        }
+
+        private int get_Current_Cash()
+        {
+            if (driver.FindElements(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Count() > 0)
+            {
+                return int.Parse(driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text.Split()[1]);
+            }
+            return -1;
+        }
+
+        private void verify_Limit(int currentcash)
+        {
+            if((currentcash!=-1) && bet_limit!=-1)
+            {
+                if((500-currentcash) > bet_limit)
+                {
+                    call_tts("Atenção! Já atingiu o seu limite de apostas.");
+                }
+            }
         }
 
         private void call_tts(String speech)
@@ -275,7 +359,29 @@ namespace AppGui
 
         private void cardsInTable()
         {
+            List<String> cards_in_table = new List<String>();
+            cards_in_table.Add(driver.FindElement(By.Id("flop1")).GetAttribute("style").Split('/')[2].Split('.')[0].ToString());
+            cards_in_table.Add(driver.FindElement(By.Id("flop2")).GetAttribute("style").Split('/')[2].Split('.')[0].ToString());
+            cards_in_table.Add(driver.FindElement(By.Id("flop3")).GetAttribute("style").Split('/')[2].Split('.')[0].ToString());
+            cards_in_table.Add(driver.FindElement(By.Id("turn")).GetAttribute("style").Split('/')[2].Split('.')[0].ToString());
+            cards_in_table.Add(driver.FindElement(By.Id("river")).GetAttribute("style").Split('/')[2].Split('.')[0].ToString());
+            List<String> final_cards = new List<String>();
 
+            for (int i = 0; i < cards_in_table.Count; i++)
+            {
+                if (cards.ContainsKey(cards_in_table[i]))
+                {
+                    final_cards.Add(cards_in_table[i]);
+                }
+            }
+
+            String cardsString = "";
+            for(int i = 0; i < final_cards.Count; i++)
+            {
+                cardsString = cardsString + ", " + final_cards[i];
+            }
+
+            call_tts("A mesa contém " + cardsString);
         }
 
         private Dictionary<String,String> addCards()
