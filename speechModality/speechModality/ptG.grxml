@@ -311,282 +311,153 @@
   <!-- Extras-->
   <rule id="Numbers">
     <one-of>
-      <item>
-        zero <tag>out = 0; </tag>
-      </item>
-      <item>
-        dez <tag>out = 10; </tag>
-      </item>
-      <item>
-        onze <tag>out = 11; </tag>
-      </item>
-      <item>
-        doze <tag>out = 12; </tag>
-      </item>
-      <item>
-        treze <tag>out = 13; </tag>
-      </item>
-      <item>
-        catorze <tag>out = 14; </tag>
-      </item>
-      <item>
-        quinze <tag>out = 15; </tag>
-      </item>
-      <item>
-        dezasseis <tag>out = 16; </tag>
-      </item>
-      <item>
-        dezassete <tag>out = 17; </tag>
-      </item>
-      <item>
-        dezoito <tag>out = 18; </tag>
-      </item>
-      <item>
-        dezanove <tag>out = 19; </tag>
-      </item>
-      <item>
-        vinte <tag>out = 20; </tag>
-      </item>
-      <item>
-        vinte e um <tag>out = 21; </tag>
-      </item>
-      <item>
-        vinte e dois <tag>out = 22; </tag>
-      </item>
-      <item>
-        vinte e três <tag>out = 23; </tag>
-      </item>
-      <item>
-        vinte e quatro <tag>out = 24; </tag>
-      </item>
-      <item>
-        vinte e cinco <tag>out = 25; </tag>
-      </item>
-      <item>
-        vinte e seis <tag>out = 26; </tag>
-      </item>
-      <item>
-        vinte e sete <tag>out = 27; </tag>
-      </item>
-      <item>
-        vinte e oito<tag>out = 28; </tag>
-      </item>
-      <item>
-        vinte e nove<tag>out = 29; </tag>
-      </item>
-      <item>
-        trinta<tag>out = 30; </tag>
-      </item>
-      <item>
-        trinta e um<tag>out = 31; </tag>
-      </item>
-      <item>
-        trinta e dois<tag>out = 32; </tag>
-      </item>
-      <item>
-        trinta e três<tag>out = 33; </tag>
-      </item>
-      <item>
-        trinta e quatro<tag>out = 34; </tag>
-      </item>
-      <item>
-        trinta e cinco<tag>out = 35; </tag>
-      </item>
-      <item>
-        trinta e seis<tag>out = 36; </tag>
-      </item>
-      <item>
-        trinta e sete<tag>out = 37; </tag>
-      </item>
-      <item>
-        trinta e oito<tag>out = 38; </tag>
-      </item>
-      <item>
-        trinta e nove<tag>out = 39; </tag>
-      </item>
-      <item>
-        quarenta<tag>out = 40; </tag>
-      </item>
-      <item>
-        quarenta e um<tag>out = 41; </tag>
-      </item>
-      <item>
-        quarenta e dois<tag>out = 42; </tag>
-      </item>
-      <item>
-        quarenta e três<tag>out = 43; </tag>
-      </item>
-      <item>
-        quarenta e quatro<tag>out = 44; </tag>
-      </item>
-      <item>
-        quarenta e cinco<tag>out = 45; </tag>
-      </item>
-      <item>
-        quarenta e seis<tag>out = 46; </tag>
-      </item>
-      <item>
-        quarenta e sete<tag>out = 47; </tag>
-      </item>
-      <item>
-        quarenta e oito<tag>out = 48; </tag>
-      </item>
-      <item>
-        quarenta e nove<tag>out = 49; </tag>
-      </item>
-      <item>
-        cinquenta<tag>out = 50; </tag>
-      </item>
-      <item>
-        cinquenta e um<tag>out = 51; </tag>
-      </item>
-      <item>
-        cinquenta e dois<tag>out = 52; </tag>
-      </item>
-      <item>
-        cinquenta e três<tag>out = 53; </tag>
-      </item>
-      <item>
-        cinquenta e quatro<tag>out = 54; </tag>
-      </item>
-      <item>
-        cinquenta e cinco<tag>out = 55; </tag>
-      </item>
-      <item>
-        cinquenta e seis<tag>out = 56; </tag>
-      </item>
-      <item>
-        cinquenta e sete<tag>out = 57; </tag>
-      </item>
-      <item>
-        cinquenta e oito<tag>out = 58; </tag>
-      </item>
-      <item>
-        cinquenta e nove<tag>out = 59; </tag>
-      </item>
-      <item>
-        sessenta<tag>out = 60; </tag>
-      </item>
-      <item>
-        sessenta e um<tag>out = 61; </tag>
-      </item>
-      <item>
-        sessenta e dois<tag>out = 62; </tag>
-      </item>
-      <item>
-        sessenta e três<tag>out = 63; </tag>
-      </item>
-      <item>
-        sessenta e quatro<tag>out = 64; </tag>
-      </item>
-      <item>
-        sessenta e cinco<tag>out = 65; </tag>
-      </item>
-      <item>
-        sessenta e seis<tag>out = 66; </tag>
-      </item>
-      <item>
-        sessenta e sete<tag>out = 67; </tag>
-      </item>
-      <item>
-        sessenta e oito<tag>out = 68; </tag>
-      </item>
-      <item>
-        sessenta e nove<tag>out = 69; </tag>
-      </item>
-      <item>
-        setenta<tag>out = 70; </tag>
-      </item>
-      <item>
-        setenta e um<tag>out = 71; </tag>
-      </item>
-      <item>
-        setenta e dois<tag>out = 72; </tag>
-      </item>
-      <item>
-        setenta e três<tag>out = 73; </tag>
-      </item>
-      <item>
-        setenta e quatro<tag>out = 74; </tag>
-      </item>
-      <item>
-        setenta e cinco<tag>out = 75; </tag>
-      </item>
-      <item>
-        setenta e seis<tag>out = 76; </tag>
-      </item>
-      <item>
-        setenta e sete<tag>out = 77; </tag>
-      </item>
-      <item>
-        setenta e oito<tag>out = 78; </tag>
-      </item>
-      <item>
-        setenta e nove<tag>out = 79; </tag>
-      </item>
-      <item>
-        oitenta<tag>out = 80; </tag>
-      </item>
-      <item>
-        oitenta e um<tag>out = 81; </tag>
-      </item>
-      <item>
-        oitenta e dois<tag>out = 82; </tag>
-      </item>
-      <item>
-        oitenta e três<tag>out = 83; </tag>
-      </item>
-      <item>
-        oitenta e quatro<tag>out = 84; </tag>
-      </item>
-      <item>
-        oitenta e cinco<tag>out = 85; </tag>
-      </item>
-      <item>
-        oitenta e seis<tag>out = 86; </tag>
-      </item>
-      <item>
-        oitenta e sete<tag>out = 87; </tag>
-      </item>
-      <item>
-        oitenta e oito<tag>out = 88; </tag>
-      </item>
-      <item>
-        oitenta e nove<tag>out = 89; </tag>
-      </item>
-      <item>
-        noventa<tag>out = 90; </tag>
-      </item>
-      <item>
-        noventa e um<tag>out = 91; </tag>
-      </item>
-      <item>
-        noventa e dois<tag>out = 92; </tag>
-      </item>
-      <item>
-        noventa e três<tag>out = 93; </tag>
-      </item>
-      <item>
-        noventa e quatro<tag>out = 94; </tag>
-      </item>
-      <item>
-        noventa e cinco<tag>out = 95; </tag>
-      </item>
-      <item>
-        noventa e seis<tag>out = 96; </tag>
-      </item>
-      <item>
-        noventa e sete<tag>out = 97; </tag>
-      </item>
-      <item>
-        noventa e oito<tag>out = 98; </tag>
-      </item>
-      <item>
-        noventa e nove<tag>out = 99; </tag>
-      </item>
-      <item>
-        cem<tag>out = 100; </tag>
-      </item>
+		<item>
+			dez <tag>out = 10; </tag>
+		</item>
+		<item>
+			vinte <tag>out = 20; </tag>
+		</item>
+		<item>
+			trinta <tag>out = 30; </tag>
+		</item>
+		<item>
+			quarenta <tag>out = 40; </tag>
+		</item>
+		<item>
+			cinquenta <tag>out = 50; </tag>
+		</item>
+		<item>
+			sessenta <tag>out = 60; </tag>
+		</item>
+		<item>
+			setenta <tag>out = 70; </tag>
+		</item>
+		<item>
+			oitenta <tag>out = 80; </tag>
+		</item>
+		<item>
+			noventa <tag>out = 90; </tag>
+		</item>
+		<item>
+			cem <tag>out = 100; </tag>
+		</item>
+		<item>
+			cento e dez <tag>out = 110; </tag>
+		</item>
+		<item>
+			cento e vinte <tag>out = 120; </tag>
+		</item>
+		<item>
+			cento e trinta <tag>out = 130; </tag>
+		</item>
+		<item>
+			cento e quarenta <tag>out = 140; </tag>
+		</item>
+		<item>
+			cento e cinquenta <tag>out = 150; </tag>
+		</item>
+		<item>
+			cento e sessenta <tag>out = 160; </tag>
+		</item>
+		<item>
+			cento e setenta <tag>out = 170; </tag>
+		</item>
+		<item>
+			cento e oitenta <tag>out = 180; </tag>
+		</item>
+		<item>
+			cento e noventa <tag>out = 190; </tag>
+		</item>
+		<item>
+			duzentos <tag>out = 200; </tag>
+		</item>
+		<item>
+			duzentos e dez <tag>out = 210; </tag>
+		</item>
+		<item>
+			duzentos e vinte <tag>out = 220; </tag>
+		</item>
+		<item>
+			duzentos e trinta <tag>out = 230; </tag>
+		</item>
+		<item>
+			duzentos e quarenta <tag>out = 240; </tag>
+		</item>
+		<item>
+			duzentos e cinquenta <tag>out = 250; </tag>
+		</item>
+		<item>
+			duzentos e sessenta <tag>out = 260; </tag>
+		</item>
+		<item>
+			duzentos e setenta <tag>out = 270; </tag>
+		</item>
+		<item>
+			duzentos e oitenta <tag>out = 280; </tag>
+		</item>
+		<item>
+			duzentos e noventa <tag>out = 290; </tag>
+		</item>
+		<item>
+			trezentos <tag>out = 300; </tag>
+		</item>
+		<item>
+			trezentos e dez <tag>out = 310; </tag>
+		</item>
+		<item>
+			trezentos e vinte <tag>out = 320; </tag>
+		</item>
+		<item>
+			trezentos e quarenta <tag>out = 340; </tag>
+		</item>
+		<item>
+			trezentos e cinquenta <tag>out = 350; </tag>
+		</item>
+		<item>
+			trezentos e sessenta <tag>out = 360; </tag>
+		</item>
+		<item>
+			trezentos e setenta <tag>out = 370; </tag>
+		</item>
+		<item>
+			trezentos e oitenta <tag>out = 380; </tag>
+		</item>
+		<item>
+			trezentos e noventa <tag>out = 390; </tag>
+		</item>
+		<item>
+			quatrocentos <tag>out = 400; </tag>
+		</item>
+		<item>
+			quatrocentos e dez <tag>out = 410; </tag>
+		</item>
+		<item>
+			quatrocentos e vinte <tag>out = 420; </tag>
+		</item>
+		<item>
+			quatrocentos e trinta <tag>out = 430; </tag>
+		</item>
+		<item>
+			quatrocentos e quarenta <tag>out = 440; </tag>
+		</item>
+		<item>
+			quatrocentos e cinquenta <tag>out = 450; </tag>
+		</item>
+		<item>
+			quatrocentos e sessenta <tag>out = 460; </tag>
+		</item>
+		<item>
+			quatrocentos e setenta <tag>out = 470; </tag>
+		</item>
+		<item>
+			quatrocentos e oitenta <tag>out = 480; </tag>
+		</item>
+		<item>
+			quatrocentos e noventa <tag>out = 490; </tag>
+		</item>
+		<item>
+			quinhentos <tag>out = 500; </tag>
+		</item>
     </one-of>
   </rule>
 
