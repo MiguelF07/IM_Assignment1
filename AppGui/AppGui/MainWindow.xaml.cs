@@ -266,6 +266,8 @@ namespace AppGui
                         if (driver.FindElements(By.Id("total-pot")).Count() > 0)
                         {
                             String pot_total = driver.FindElement(By.Id("total-pot")).Text;
+                            Console.WriteLine(pot_total);
+                            Console.WriteLine("-------");
                             call_tts("O valor total apostado atualmente é " + pot_total.Split('$')[1] + "dólares");
                         }
                         //procurar valor no id="total-pot"
@@ -310,9 +312,14 @@ namespace AppGui
 
         private int get_Current_Cash()
         {
+            Console.WriteLine("IN CASH OFF IF");
             if (driver.FindElements(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Count() > 0)
             {
-                return int.Parse(driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text.Split()[1]);
+                Console.WriteLine("IN CASH IN IF");
+                Console.WriteLine(driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text);
+                Console.WriteLine(driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text.Split('$')[1]);
+
+                return int.Parse(driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text.Split('$')[1]);
             }
             return -1;
         }
