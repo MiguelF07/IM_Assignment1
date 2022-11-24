@@ -316,9 +316,9 @@
 	<!-- Definições acrescentadas-->
 
 	<rule id="Limit">
-		<example>Pretendo definir um limite para o próximo jogo</example>
-		<example>Quero definir um limite para este jogo</example>
-		<example>Quanto limitar as minhas apostas</example>
+		<example>Pretendo definir um limite</example>
+		<example>Quero definir um limite</example>
+		<example>Quero limitar as minhas apostas</example>
 
 		<item repeat="0-1">Quero</item>
 		<item repeat="0-1">Pretendo</item>
@@ -328,10 +328,6 @@
 			<item> meter limite</item>
 			<item> limite</item>
 			<item> limitar</item>
-		</one-of>
-		<one-of>
-			<item> próximo jogo</item>
-			<item> este jogo</item>
 		</one-of>
 	</rule>
 

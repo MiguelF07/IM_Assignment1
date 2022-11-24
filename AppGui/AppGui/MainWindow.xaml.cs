@@ -14,6 +14,8 @@ using OpenQA.Selenium.Interactions;
 using System.Xml;
 using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
+using OpenQA.Selenium.Support.UI;
+using System.Threading;
 
 namespace AppGui
 {
@@ -45,8 +47,8 @@ namespace AppGui
             raise_flag = false;
             all_in_flag = false;
             limit_flag = false;
-            bet_limit = -1;
-            currentCash = -1;
+            this.bet_limit = -1;
+            this.currentCash = -1;
 
 
             mmiC = new MmiCommunication("localhost", 8000, "User1", "GUI");
@@ -74,21 +76,12 @@ namespace AppGui
             System.Diagnostics.Debug.WriteLine(((string)json.confidence[0].ToString()));
 
 
-            //Console.WriteLine("jjjjjjjjj");
-            //string value = doc.Root.Element("emma:interpretation").Attribute("emma:confidence").Value;
-            //Console.WriteLine("-----------");
-            //Console.WriteLine(value);
-            //if (float.Parse(value) < 0.5)
-            //{
-            //    call_tts("Desculpe pode repetir?");
-            //}
-
             var text_of_switch = (string)json.recognized[0].ToString();
 
-            var saldo_atual = get_Current_Cash();
-            verify_Limit(saldo_atual);
+            this.currentCash = get_Current_Cash();
+            
 
-            if(float.Parse(((string)json.confidence[0].ToString()))<0.45 || float.Parse(((string)json.confidence[0].ToString())) > 0.95)
+            if(float.Parse(((string)json.confidence[0].ToString()))<0.45)
             {
                 call_tts("Não percebi, pode repetir?");
             }
@@ -107,6 +100,11 @@ namespace AppGui
                 if (limit_flag == true)
                 {
                     text_of_switch = "LIMIT";
+                }
+
+                if(raise_flag!=true && all_in_flag!=true && limit_flag!=true)
+                {
+                    verify_Limit();
                 }
 
 
@@ -133,6 +131,10 @@ namespace AppGui
                         {
                             driver.FindElement(By.Id("fold-button")).Click();
                             call_tts("A reiniciar o jogo.");
+                        }
+                        if (driver.FindElements(By.XPath("//*[@id=\"modal-box\"]/table/tbody/tr/td/table/tbody/tr/td/div/a")).Count() > 0)
+                        {
+                            driver.FindElement(By.XPath("//*[@id=\"modal-box\"]/table/tbody/tr/td/table/tbody/tr/td/div/a")).Click();
                         }
                         break;
                     case "CONTINUE":
@@ -182,29 +184,23 @@ namespace AppGui
                             raise_flag = true;
                             if (raise_flag == true)
                             {
-                                Console.WriteLine("Esta no raise flag");
 
                                 if (json.recognized[0].ToString().Contains("NUMBERS"))
                                 {
                                     var numero = int.Parse(json.recognized[0].ToString().Split('S')[1]);
-                                    Console.WriteLine(numero);
-                                    Console.WriteLine("--------------------------");
 
                                     if (numero % 10 != 0 || numero < int.Parse(v_min) || numero > int.Parse(v_max))
                                     {
-                                        Console.WriteLine("No If");
                                         call_tts("O número da aposta tem de ser múltiplo de 10 e estar entre os valores referidos.");
                                     }
 
                                     else
                                     {
-                                        Console.WriteLine("No else");
                                         var n_of_clicks = (numero - int.Parse(v_min)) / 10;
                                         for (var i = 0; i < n_of_clicks; i++)
                                         {
                                             if (driver.FindElements(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[7]")).Count() > 0)
                                             {
-                                                Console.WriteLine("Yeyy");
                                                 driver.FindElement(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[7]")).Click();
                                             }
 
@@ -228,12 +224,13 @@ namespace AppGui
                         if(all_in_flag == true)
                         {
                             String command_all_in = (string)json.recognized[0].ToString();
-                            //Adicionar à gramatica um YES e um NO
                             if(command_all_in == "YES")
                             {
-                                if (driver.FindElements(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[6]")).Count() > 0)
+                                if(driver.FindElements(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td")).Count()>0)
                                 {
-                                    driver.FindElement(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[6]")).Click(); //Clica no MAX
+                                    var parent = driver.FindElement(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td"));
+                                    var tamanho = parent.FindElements(By.XPath("./*")).Count();
+                                    driver.FindElement(By.XPath("//*[@id=\"quick-raises\"]/table/tbody/tr/td/a[" + (tamanho - 1) + "]")).Click(); //Clica no MAX
                                     driver.FindElement(By.Id("raise-button")).Click();
                                     call_tts("Foi apostada a totalidade do seu saldo.");
                                 }
@@ -266,8 +263,6 @@ namespace AppGui
                         if (driver.FindElements(By.Id("total-pot")).Count() > 0)
                         {
                             String pot_total = driver.FindElement(By.Id("total-pot")).Text;
-                            Console.WriteLine(pot_total);
-                            Console.WriteLine("-------");
                             call_tts("O valor total apostado atualmente é " + pot_total.Split('$')[1] + "dólares");
                         }
                         //procurar valor no id="total-pot"
@@ -282,6 +277,7 @@ namespace AppGui
                                 var numero = (json.recognized[0].ToString().Split('S')[1]);
                                 call_tts("Limite de " + numero + " dólares definido.");
                                 limit_flag = false;
+                                this.bet_limit = int.Parse(numero);
 
                             }
                         }
@@ -303,7 +299,10 @@ namespace AppGui
                     default:
                         Console.WriteLine("No option selected.");
                         break;
+
+                    
                 }
+                this.currentCash = get_Current_Cash();
             }
 
             
@@ -312,23 +311,18 @@ namespace AppGui
 
         private int get_Current_Cash()
         {
-            Console.WriteLine("IN CASH OFF IF");
             if (driver.FindElements(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Count() > 0)
             {
-                Console.WriteLine("IN CASH IN IF");
-                Console.WriteLine(driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text);
-                Console.WriteLine(driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text.Split('$')[1]);
-
                 return int.Parse(driver.FindElement(By.XPath("//*[@id=\"seat0\"]/div[2]/div[2]")).Text.Split('$')[1]);
             }
             return -1;
         }
 
-        private void verify_Limit(int currentcash)
+        private void verify_Limit()
         {
-            if((currentcash!=-1) && bet_limit!=-1)
+            if((this.currentCash!=-1) && this.bet_limit!=-1)
             {
-                if((500-currentcash) > bet_limit)
+                if((500-this.currentCash) > this.bet_limit)
                 {
                     call_tts("Atenção! Já atingiu o seu limite de apostas.");
                 }
@@ -340,17 +334,9 @@ namespace AppGui
             //  new 16 april 2020
             mmic.Send(lce.NewContextRequest());
 
-            string json2 = ""; // "{ \"synthesize\": [";
+            string json2 = ""; 
             json2 += speech;
-            //json2 += "] }";
-            /*
-             foreach (var resultSemantic in e.Result.Semantics)
-            {
-                json += "\"" + resultSemantic.Value.Value + "\", ";
-            }
-            json = json.Substring(0, json.Length - 2);
-            json += "] }";
-            */
+
             var exNot = lce.ExtensionNotification(0 + "", 0 + "", 1, json2);
             mmic.Send(exNot);
         }
@@ -392,8 +378,16 @@ namespace AppGui
             {
                 cardsString = cardsString + ", " + final_cards[i];
             }
+            if(cardsString == "")
+            {
+                call_tts("A mesa está vazia.");
+            }
+            else
+            {
+                call_tts("A mesa contém " + cardsString);
+            }
 
-            call_tts("A mesa contém " + cardsString);
+           
         }
 
         private Dictionary<String,String> addCards()
