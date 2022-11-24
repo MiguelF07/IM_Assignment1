@@ -298,7 +298,7 @@
 		</one-of>
 	</rule>
 	<rule id="Cash">
-		<example>Qual o meu saldo atual?</example>
+		<example>Qual é o meu saldo atual?</example>
 		<example>Quero saber que saldo ainda tenho</example>
 		<example>Quanto é o meu saldo agora?</example>
 
