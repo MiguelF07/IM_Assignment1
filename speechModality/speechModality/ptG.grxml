@@ -1,464 +1,505 @@
 ﻿<?xml version="1.0"?>
 <grammar xml:lang="pt-PT" version="1.0" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
-  <rule id="rootRule" scope="public">
-    <item>
-      <one-of>
+	<rule id="rootRule" scope="public">
+		<item>
+			<one-of>
 
-        <!-- Opções de Jogo-->
-        <item>
-          <ruleref uri="#Start"/>
-          <tag>out.start="START";</tag>
-        </item>
-        <item>
-          <ruleref uri="#End"/>
-          <tag>out.end="END";</tag>
-        </item>
-        <item>
-          <ruleref uri="#Restart"/>
-          <tag>out.restart="RESTART";</tag>
-        </item>
-        <item>
-          <ruleref uri="#Continue"/>
-          <tag>out.continue="CONTINUE";</tag>
-        </item>
-        <!--<item>
+				<!-- Opções de Jogo-->
+				<item>
+					<ruleref uri="#Start"/>
+					<tag>out.start="START";</tag>
+				</item>
+				<item>
+					<ruleref uri="#End"/>
+					<tag>out.end="END";</tag>
+				</item>
+				<item>
+					<ruleref uri="#Restart"/>
+					<tag>out.restart="RESTART";</tag>
+				</item>
+				<item>
+					<ruleref uri="#Continue"/>
+					<tag>out.continue="CONTINUE";</tag>
+				</item>
+				<!--<item>
 					<ruleref uri="#PlayerName"/>
 					<tag>out.playername="PLAYERNAME";</tag>
 				</item>-->
 
-        <!-- Ações do Jogo in Game-->
-        <item>
-          <ruleref uri="#Check"/>
-          <tag>out.check="CHECK";</tag>
-        </item>
-        <item>
-          <ruleref uri="#Call"/>
-          <tag>out.call="CALL";</tag>
-        </item>
-        <item>
-          <ruleref uri="#Raise"/>
-          <tag>out.raise="RAISE";</tag>
-        </item>
-        <item>
-          <ruleref uri="#Fold"/>
-          <tag>out.fold="FOLD";</tag>
-        </item>
-        <item>
-          <ruleref uri="#AllIn"/>
-          <tag>out.allin="ALLIN";</tag>
-        </item>
+				<!-- Ações do Jogo in Game-->
+				<item>
+					<ruleref uri="#Check"/>
+					<tag>out.check="CHECK";</tag>
+				</item>
+				<item>
+					<ruleref uri="#Call"/>
+					<tag>out.call="CALL";</tag>
+				</item>
+				<item>
+					<ruleref uri="#Raise"/>
+					<tag>out.raise="RAISE";</tag>
+				</item>
+				<item>
+					<ruleref uri="#Fold"/>
+					<tag>out.fold="FOLD";</tag>
+				</item>
+				<item>
+					<ruleref uri="#AllIn"/>
+					<tag>out.allin="ALLIN";</tag>
+				</item>
 
-        <!-- Informação sobre o estado de jogo-->
-        <item>
-          <ruleref uri="#Table"/>
-          <tag>out.table="TABLE";</tag>
-        </item>
-        <item>
-          <ruleref uri="#Hand"/>
-          <tag>out.hand="HAND";</tag>
-        </item>
-        <item>
-          <ruleref uri="#Pot"/>
-          <tag>out.pot="POT";</tag>
-        </item>
+				<!-- Informação sobre o estado de jogo-->
+				<item>
+					<ruleref uri="#Table"/>
+					<tag>out.table="TABLE";</tag>
+				</item>
+				<item>
+					<ruleref uri="#Hand"/>
+					<tag>out.hand="HAND";</tag>
+				</item>
+				<item>
+					<ruleref uri="#Pot"/>
+					<tag>out.pot="POT";</tag>
+				</item>
+				<item>
+					<ruleref uri="#Cash"/>
+					<tag>out.cash="CASH";</tag>
+				</item>
+				<!-- Definições acrescentadas-->
+				<item>
+					<ruleref uri="#Limit"/>
+					<tag>out.limit="LIMIT";</tag>
+				</item>
 
-        <!-- Definições acrescentadas-->
-        <item>
-          <ruleref uri="#Limit"/>
-          <tag>out.limit="LIMIT";</tag>
-        </item>
+				<!-- Extras-->
+				<item>
+					<ruleref uri="#Numbers"/>
+					<tag>out.numbers="NUMBERS"+rules.latest();</tag>
+				</item>
+				<item>
+					<ruleref uri="#Yes"/>
+					<tag>out.yes="YES";</tag>
+				</item>
+				<item>
+					<ruleref uri="#No"/>
+					<tag>out.no="NO";</tag>
+				</item>
+			</one-of>
+		</item>
 
-        <!-- Extras-->
-        <item>
-          <ruleref uri="#Numbers"/>
-          <tag>out.numbers="NUMBERS"+rules.latest();</tag>
-        </item>
+		<!-- Opções de Jogo-->
+	</rule>
+	<rule id="Start">
+		<example> Quero começar o jogo! </example>
+		<example> Pretendo iniciar o jogo! </example>
+		<example> Inicia um novo jogo! </example>
+		<example> Começa a jogar. </example>
+		<example> Gostava de começar a jogar. </example>
 
-      </one-of>
-    </item>
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> começar</item>
+			<item> iniciar</item>
+			<item> começa</item>
+			<item> inicia</item>
+		</one-of>
+		<item repeat="0-1"> jogo </item>
+		<item repeat="0-1"> novo jogo </item>
+		<item repeat="0-1"> jogar</item>
+	</rule>
 
-    <!-- Opções de Jogo-->
-  </rule>
-  <rule id="Start">
-    <example> Quero começar o jogo! </example>
-    <example> Pretendo iniciar o jogo! </example>
-    <example> Inicia um novo jogo! </example>
-    <example> Começa a jogar. </example>
-    <example> Gostava de começar a jogar. </example>
+	<rule id="End">
+		<example> Quero acabar o jogo! </example>
+		<example> Pretendo terminar o jogo! </example>
+		<example> Termina este jogo! </example>
+		<example> Acaba com este jogo. </example>
+		<example> Gostava de fechar o jogo. </example>
 
-    <item repeat="0-1">Quero </item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava de</item>
-    <one-of>
-      <item> começar</item>
-      <item> iniciar</item>
-      <item> começa</item>
-      <item> inicia</item>
-    </one-of>
-    <item repeat="0-1"> jogo </item>
-    <item repeat="0-1"> novo jogo </item>
-    <item repeat="0-1"> jogar</item>
-  </rule>
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> terminar</item>
+			<item> acabar</item>
+			<item> termina</item>
+			<item> acaba</item>
+			<item> fechar</item>
+		</one-of>
 
-  <rule id="End">
-    <example> Quero acabar o jogo! </example>
-    <example> Pretendo terminar o jogo! </example>
-    <example> Termina este jogo! </example>
-    <example> Acaba com este jogo. </example>
-    <example> Gostava de fechar o jogo. </example>
+		<item repeat="0-1"> jogo </item>
+	</rule>
 
-    <item repeat="0-1">Quero </item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava de</item>
-    <one-of>
-      <item> terminar</item>
-      <item> acabar</item>
-      <item> termina</item>
-      <item> acaba</item>
-      <item> fechar</item>
-    </one-of>
+	<rule id="Restart">
+		<example> Quero reiniciar o jogo! </example>
+		<example> Pretendo reiniciar o jogo! </example>
+		<example> Gostava de recomeçar o jogar. </example>
 
-    <item repeat="0-1"> jogo </item>
-  </rule>
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> reiniciar</item>
+			<item> recomeçar</item>
+			<item> novo</item>
 
-  <rule id="Restart">
-    <example> Quero reiniciar o jogo! </example>
-    <example> Pretendo reiniciar o jogo! </example>
-    <example> Gostava de recomeçar o jogar. </example>
+		</one-of>
+		<item repeat="0-1"> jogo </item>
+		<item repeat="0-1"> novo jogo </item>
+		<item repeat="0-1"> jogar</item>
+	</rule>
 
-    <item repeat="0-1">Quero </item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava de</item>
-    <one-of>
-      <item> reiniciar</item>
-      <item> recomeçar</item>
-      <item> novo</item>
+	<rule id="Continue">
+		<example> Quero continuar o jogo! </example>
+		<example> Pretendo prosseguir com o jogo! </example>
+		<example> Gostava de ficar o jogar. </example>
+		<example> Continua o jogo. </example>
 
-    </one-of>
-    <item repeat="0-1"> jogo </item>
-    <item repeat="0-1"> novo jogo </item>
-    <item repeat="0-1"> jogar</item>
-  </rule>
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> continuar</item>
+			<item> prosseguir</item>
+			<item> continua</item>
+			<item> ficar</item>
 
-  <rule id="Continue">
-    <example> Quero continuar o jogo! </example>
-    <example> Pretendo prosseguir com o jogo! </example>
-    <example> Gostava de ficar o jogar. </example>
-    <example> Continua o jogo. </example>
+		</one-of>
+		<item repeat="0-1"> jogo </item>
+		<item repeat="0-1"> jogar</item>
+	</rule>
 
-    <item repeat="0-1">Quero </item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava de</item>
-    <one-of>
-      <item> continuar</item>
-      <item> prosseguir</item>
-      <item> continua</item>
-      <item> ficar</item>
+	<!-- Ações do Jogo in Game-->
+	<rule id="Check">
+		<example> Quero passar a aposta! </example>
+		<example> Passa ao próximo jogador! </example>
 
-    </one-of>
-    <item repeat="0-1"> jogo </item>
-    <item repeat="0-1"> jogar</item>
-  </rule>
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> passar</item>
+			<item> passa</item>
 
-  <!-- Ações do Jogo in Game-->
-  <rule id="Check">
-    <example> Quero passar a aposta! </example>
-    <example> Passa ao próximo jogador! </example>
+		</one-of>
+		<item repeat="0-1"> aposta</item>
+		<item repeat="0-1"> próximo</item>
+		<item repeat="0-1"> jogador</item>
+	</rule>
 
-    <item repeat="0-1">Quero </item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava de</item>
-    <one-of>
-      <item> passar</item>
-      <item> passa</item>
+	<rule id="Call">
+		<example> Igualo! </example>
+		<example> Quero igualar a aposta! </example>
 
-    </one-of>
-    <item repeat="0-1"> aposta</item>
-    <item repeat="0-1"> próximo</item>
-    <item repeat="0-1"> jogador</item>
-  </rule>
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> igualar</item>
+			<item> igualo</item>
+			<item> pago</item>
 
-  <rule id="Call">
-    <example> Igualo! </example>
-    <example> Quero igualar a aposta! </example>
+		</one-of>
+		<item repeat="0-1"> aposta</item>
+	</rule>
 
-    <item repeat="0-1">Quero </item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava de</item>
-    <one-of>
-      <item> igualar</item>
-      <item> igualo</item>
-      <item> pago</item>
+	<rule id="Raise">
+		<example> Aumentar a aposta! </example>
+		<example> Apostar mais! </example>
+		<example> Subir a aposta! </example>
 
-    </one-of>
-    <item repeat="0-1"> aposta</item>
-  </rule>
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> aumentar</item>
+			<item> subir</item>
+			<item> apostar</item>
 
-  <rule id="Raise">
-    <example> Aumentar a aposta! </example>
-    <example> Apostar mais! </example>
-    <example> Subir a aposta! </example>
+		</one-of>
+		<item repeat="0-1"> aposta</item>
+		<item repeat="0-1"> mais</item>
+	</rule>
 
-    <item repeat="0-1">Quero </item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava de</item>
-    <one-of>
-      <item> aumentar</item>
-      <item> subir</item>
-      <item> apostar</item>
+	<rule id="Fold">
+		<example>quero desistir</example>
+		<example>quero sair</example>
+		<example>desisto</example>
 
-    </one-of>
-    <item repeat="0-1"> aposta</item>
-    <item repeat="0-1"> mais</item>
-  </rule>
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item>desistir</item>
+			<item>sair</item>
+			<item>desisto</item>
+		</one-of>
+	</rule>
 
-  <rule id="Fold">
-    <example>quero desistir</example>
-    <example>quero sair</example>
-    <example>desisto</example>
+	<rule id="AllIn">
+		<example>quero apostar tudo</example>
 
-    <item repeat="0-1">Quero </item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava de</item>
-    <one-of>
-      <item>desistir</item>
-      <item>sair</item>
-      <item>desisto</item>
-    </one-of>
-  </rule>
+		<item repeat="0-1">Quero </item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava de</item>
+		<one-of>
+			<item> apostar tudo </item>
+		</one-of>
+	</rule>
 
-  <rule id="AllIn">
-    <example>quero apostar tudo</example>
+	<!-- Informação sobre o estado de jogo-->
+	<rule id="Table">
+		<example>Mostra-me as cartas na mesa</example>
+		<example>Quero ver as cartas da mesa</example>
+		<example>Diz-me as cartas da mesa</example>
 
-    <item repeat="0-1">Quero </item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava de</item>
-    <one-of>
-      <item> apostar tudo</item>
-    </one-of>
-  </rule>
+		<item repeat="0-1">Mostra</item>
+		<item repeat="0-1">Diz</item>
+		<item repeat="0-1">Quero ver</item>
+		<item repeat="0-1">Pretendo ver</item>
+		<item repeat="0-1">Gostava de ver</item>
+		<one-of>
+			<item> cartas na mesa</item>
+			<item> mesa</item>
+		</one-of>
+	</rule>
 
-  <!-- Informação sobre o estado de jogo-->
-  <rule id="Table">
-    <example>Mostra-me as cartas na mesa</example>
-    <example>Quero ver as cartas da mesa</example>
-    <example>Diz-me as cartas da mesa</example>
+	<rule id="Hand">
+		<example>Mostra-me a minha mão</example>
+		<example>Quero ver as cartas da minha mão</example>
+		<example>Diz-me as cartas da minha mão</example>
 
-    <item repeat="0-1">Mostra</item>
-    <item repeat="0-1">Diz</item>
-    <item repeat="0-1">Quero ver</item>
-    <item repeat="0-1">Pretendo ver</item>
-    <item repeat="0-1">Gostava de ver</item>
-    <one-of>
-      <item> cartas na mesa</item>
-      <item> mesa</item>
-    </one-of>
-  </rule>
+		<item repeat="0-1">Mostra</item>
+		<item repeat="0-1">Diz</item>
+		<item repeat="0-1">Quero ver</item>
+		<item repeat="0-1">Pretendo ver</item>
+		<item repeat="0-1">Gostava de ver</item>
+		<one-of>
+			<item> cartas da minha mão</item>
+			<item> minha mão</item>
+		</one-of>
+	</rule>
 
-  <rule id="Hand">
-    <example>Mostra-me a minha mão</example>
-    <example>Quero ver as cartas da minha mão</example>
-    <example>Diz-me as cartas da minha mão</example>
+	<rule id="Pot">
+		<example>Qual o valor total apostado?</example>
+		<example>Quero saber o valor total</example>
+		<example>Quanto apostaram até agora?</example>
 
-    <item repeat="0-1">Mostra</item>
-    <item repeat="0-1">Diz</item>
-    <item repeat="0-1">Quero ver</item>
-    <item repeat="0-1">Pretendo ver</item>
-    <item repeat="0-1">Gostava de ver</item>
-    <one-of>
-      <item> cartas da minha mão</item>
-      <item> minha mão</item>
-    </one-of>
-  </rule>
+		<item repeat="0-1">Mostra</item>
+		<item repeat="0-1">Diz</item>
+		<item repeat="0-1">Quero ver</item>
+		<item repeat="0-1">Pretendo ver</item>
+		<item repeat="0-1">Gostava de ver</item>
+		<one-of>
+			<item> valor total</item>
+			<item> total da aposta</item>
+			<item> total apostado</item>
+		</one-of>
+	</rule>
+	<rule id="Cash">
+		<example>Qual o meu saldo atual?</example>
+		<example>Quero saber que saldo ainda tenho</example>
+		<example>Quanto é o meu saldo agora?</example>
 
-  <rule id="Pot">
-    <example>Qual o valor total apostado?</example>
-    <example>Quero saber o valor total</example>
-    <example>Quanto apostaram até agora?</example>
+		<item repeat="0-1">Mostra</item>
+		<item repeat="0-1">Diz</item>
+		<item repeat="0-1">Quero ver</item>
+		<item repeat="0-1">Pretendo ver</item>
+		<item repeat="0-1">Gostava de ver</item>
+		<one-of>
+			<item> meu saldo</item>
+			<item> saldo</item>
+		</one-of>
+	</rule>
 
-    <item repeat="0-1">Mostra</item>
-    <item repeat="0-1">Diz</item>
-    <item repeat="0-1">Quero ver</item>
-    <item repeat="0-1">Pretendo ver</item>
-    <item repeat="0-1">Gostava de ver</item>
-    <one-of>
-      <item> valor total</item>
-      <item> total da aposta</item>
-      <item> total apostado</item>
-    </one-of>
-  </rule>
+	<!-- Definições acrescentadas-->
 
-  <!-- Definições acrescentadas-->
+	<rule id="Limit">
+		<example>Pretendo definir um limite para o próximo jogo</example>
+		<example>Quero definir um limite para este jogo</example>
+		<example>Quanto limitar as minhas apostas</example>
 
-  <rule id="Limit">
-    <example>Pretendo definir um limite para o próximo jogo</example>
-    <example>Quero definir um limite diário</example>
-    <example>Quanto limitar as minhas apostas</example>
+		<item repeat="0-1">Quero</item>
+		<item repeat="0-1">Pretendo</item>
+		<item repeat="0-1">Gostava</item>
+		<one-of>
+			<item> definir limite</item>
+			<item> meter limite</item>
+			<item> limite</item>
+			<item> limitar</item>
+		</one-of>
+		<one-of>
+			<item> próximo jogo</item>
+			<item> este jogo</item>
+		</one-of>
+	</rule>
 
-    <item repeat="0-1">Quero</item>
-    <item repeat="0-1">Pretendo</item>
-    <item repeat="0-1">Gostava</item>
-    <one-of>
-      <item> definir limite</item>
-      <item> limitar</item>
-    </one-of>
-    <one-of>
-      <item> diário</item>
-      <item> próximo jogo</item>
-    </one-of>
-  </rule>
 
-  <!-- Extras-->
-  <rule id="Numbers">
-    <one-of>
-		<item>
-			dez <tag>out = 10; </tag>
-		</item>
-		<item>
-			vinte <tag>out = 20; </tag>
-		</item>
-		<item>
-			trinta <tag>out = 30; </tag>
-		</item>
-		<item>
-			quarenta <tag>out = 40; </tag>
-		</item>
-		<item>
-			cinquenta <tag>out = 50; </tag>
-		</item>
-		<item>
-			sessenta <tag>out = 60; </tag>
-		</item>
-		<item>
-			setenta <tag>out = 70; </tag>
-		</item>
-		<item>
-			oitenta <tag>out = 80; </tag>
-		</item>
-		<item>
-			noventa <tag>out = 90; </tag>
-		</item>
-		<item>
-			cem <tag>out = 100; </tag>
-		</item>
-		<item>
-			cento e dez <tag>out = 110; </tag>
-		</item>
-		<item>
-			cento e vinte <tag>out = 120; </tag>
-		</item>
-		<item>
-			cento e trinta <tag>out = 130; </tag>
-		</item>
-		<item>
-			cento e quarenta <tag>out = 140; </tag>
-		</item>
-		<item>
-			cento e cinquenta <tag>out = 150; </tag>
-		</item>
-		<item>
-			cento e sessenta <tag>out = 160; </tag>
-		</item>
-		<item>
-			cento e setenta <tag>out = 170; </tag>
-		</item>
-		<item>
-			cento e oitenta <tag>out = 180; </tag>
-		</item>
-		<item>
-			cento e noventa <tag>out = 190; </tag>
-		</item>
-		<item>
-			duzentos <tag>out = 200; </tag>
-		</item>
-		<item>
-			duzentos e dez <tag>out = 210; </tag>
-		</item>
-		<item>
-			duzentos e vinte <tag>out = 220; </tag>
-		</item>
-		<item>
-			duzentos e trinta <tag>out = 230; </tag>
-		</item>
-		<item>
-			duzentos e quarenta <tag>out = 240; </tag>
-		</item>
-		<item>
-			duzentos e cinquenta <tag>out = 250; </tag>
-		</item>
-		<item>
-			duzentos e sessenta <tag>out = 260; </tag>
-		</item>
-		<item>
-			duzentos e setenta <tag>out = 270; </tag>
-		</item>
-		<item>
-			duzentos e oitenta <tag>out = 280; </tag>
-		</item>
-		<item>
-			duzentos e noventa <tag>out = 290; </tag>
-		</item>
-		<item>
-			trezentos <tag>out = 300; </tag>
-		</item>
-		<item>
-			trezentos e dez <tag>out = 310; </tag>
-		</item>
-		<item>
-			trezentos e vinte <tag>out = 320; </tag>
-		</item>
-		<item>
-			trezentos e quarenta <tag>out = 340; </tag>
-		</item>
-		<item>
-			trezentos e cinquenta <tag>out = 350; </tag>
-		</item>
-		<item>
-			trezentos e sessenta <tag>out = 360; </tag>
-		</item>
-		<item>
-			trezentos e setenta <tag>out = 370; </tag>
-		</item>
-		<item>
-			trezentos e oitenta <tag>out = 380; </tag>
-		</item>
-		<item>
-			trezentos e noventa <tag>out = 390; </tag>
-		</item>
-		<item>
-			quatrocentos <tag>out = 400; </tag>
-		</item>
-		<item>
-			quatrocentos e dez <tag>out = 410; </tag>
-		</item>
-		<item>
-			quatrocentos e vinte <tag>out = 420; </tag>
-		</item>
-		<item>
-			quatrocentos e trinta <tag>out = 430; </tag>
-		</item>
-		<item>
-			quatrocentos e quarenta <tag>out = 440; </tag>
-		</item>
-		<item>
-			quatrocentos e cinquenta <tag>out = 450; </tag>
-		</item>
-		<item>
-			quatrocentos e sessenta <tag>out = 460; </tag>
-		</item>
-		<item>
-			quatrocentos e setenta <tag>out = 470; </tag>
-		</item>
-		<item>
-			quatrocentos e oitenta <tag>out = 480; </tag>
-		</item>
-		<item>
-			quatrocentos e noventa <tag>out = 490; </tag>
-		</item>
-		<item>
-			quinhentos <tag>out = 500; </tag>
-		</item>
-    </one-of>
-  </rule>
+
+	<!-- Extras-->
+	<rule id="Yes">
+		<one-of>
+			<item> sim </item>
+			<item> claro </item>
+		</one-of>
+	</rule>
+	<rule id="No">
+		<one-of>
+			<item> nunca </item>
+			<item> não </item>
+		</one-of>
+	</rule>
+	<rule id="Numbers">
+		<one-of>
+			<item>
+				dez <tag>out = 10; </tag>
+			</item>
+			<item>
+				vinte <tag>out = 20; </tag>
+			</item>
+			<item>
+				trinta <tag>out = 30; </tag>
+			</item>
+			<item>
+				quarenta <tag>out = 40; </tag>
+			</item>
+			<item>
+				cinquenta <tag>out = 50; </tag>
+			</item>
+			<item>
+				sessenta <tag>out = 60; </tag>
+			</item>
+			<item>
+				setenta <tag>out = 70; </tag>
+			</item>
+			<item>
+				oitenta <tag>out = 80; </tag>
+			</item>
+			<item>
+				noventa <tag>out = 90; </tag>
+			</item>
+			<item>
+				cem <tag>out = 100; </tag>
+			</item>
+			<item>
+				cento e dez <tag>out = 110; </tag>
+			</item>
+			<item>
+				cento e vinte <tag>out = 120; </tag>
+			</item>
+			<item>
+				cento e trinta <tag>out = 130; </tag>
+			</item>
+			<item>
+				cento e quarenta <tag>out = 140; </tag>
+			</item>
+			<item>
+				cento e cinquenta <tag>out = 150; </tag>
+			</item>
+			<item>
+				cento e sessenta <tag>out = 160; </tag>
+			</item>
+			<item>
+				cento e setenta <tag>out = 170; </tag>
+			</item>
+			<item>
+				cento e oitenta <tag>out = 180; </tag>
+			</item>
+			<item>
+				cento e noventa <tag>out = 190; </tag>
+			</item>
+			<item>
+				duzentos <tag>out = 200; </tag>
+			</item>
+			<item>
+				duzentos e dez <tag>out = 210; </tag>
+			</item>
+			<item>
+				duzentos e vinte <tag>out = 220; </tag>
+			</item>
+			<item>
+				duzentos e trinta <tag>out = 230; </tag>
+			</item>
+			<item>
+				duzentos e quarenta <tag>out = 240; </tag>
+			</item>
+			<item>
+				duzentos e cinquenta <tag>out = 250; </tag>
+			</item>
+			<item>
+				duzentos e sessenta <tag>out = 260; </tag>
+			</item>
+			<item>
+				duzentos e setenta <tag>out = 270; </tag>
+			</item>
+			<item>
+				duzentos e oitenta <tag>out = 280; </tag>
+			</item>
+			<item>
+				duzentos e noventa <tag>out = 290; </tag>
+			</item>
+			<item>
+				trezentos <tag>out = 300; </tag>
+			</item>
+			<item>
+				trezentos e dez <tag>out = 310; </tag>
+			</item>
+			<item>
+				trezentos e vinte <tag>out = 320; </tag>
+			</item>
+			<item>
+				trezentos e quarenta <tag>out = 340; </tag>
+			</item>
+			<item>
+				trezentos e cinquenta <tag>out = 350; </tag>
+			</item>
+			<item>
+				trezentos e sessenta <tag>out = 360; </tag>
+			</item>
+			<item>
+				trezentos e setenta <tag>out = 370; </tag>
+			</item>
+			<item>
+				trezentos e oitenta <tag>out = 380; </tag>
+			</item>
+			<item>
+				trezentos e noventa <tag>out = 390; </tag>
+			</item>
+			<item>
+				quatrocentos <tag>out = 400; </tag>
+			</item>
+			<item>
+				quatrocentos e dez <tag>out = 410; </tag>
+			</item>
+			<item>
+				quatrocentos e vinte <tag>out = 420; </tag>
+			</item>
+			<item>
+				quatrocentos e trinta <tag>out = 430; </tag>
+			</item>
+			<item>
+				quatrocentos e quarenta <tag>out = 440; </tag>
+			</item>
+			<item>
+				quatrocentos e cinquenta <tag>out = 450; </tag>
+			</item>
+			<item>
+				quatrocentos e sessenta <tag>out = 460; </tag>
+			</item>
+			<item>
+				quatrocentos e setenta <tag>out = 470; </tag>
+			</item>
+			<item>
+				quatrocentos e oitenta <tag>out = 480; </tag>
+			</item>
+			<item>
+				quatrocentos e noventa <tag>out = 490; </tag>
+			</item>
+			<item>
+				quinhentos <tag>out = 500; </tag>
+			</item>
+		</one-of>
+	</rule>
 
 </grammar>
