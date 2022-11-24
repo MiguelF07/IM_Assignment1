@@ -102,7 +102,7 @@ namespace AppGui
                     text_of_switch = "LIMIT";
                 }
 
-                if(raise_flag!=true && all_in_flag!=true && limit_flag!=true)
+                if(raise_flag!=true && all_in_flag!=true && limit_flag!=true && text_of_switch!="CHECK" && text_of_switch!="FOLD")
                 {
                     verify_Limit();
                 }
