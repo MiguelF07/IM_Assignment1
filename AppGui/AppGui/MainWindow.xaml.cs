@@ -218,6 +218,7 @@ namespace AppGui
                         if (driver.FindElements(By.Id("fold-button")).Count() > 0)
                         {
                             driver.FindElement(By.Id("fold-button")).Click();
+                            call_tts("Você passou a jogada.");
                         }
                         break;
                     case "ALLIN":
